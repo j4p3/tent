@@ -1,8 +1,9 @@
 source 'https://rubygems.org'
 
 # Core
+ruby '2.0.0'
 gem 'rails', '4.0.2'
-gem 'rails-api'
+gem 'rails-api', '~> 0.1.0'
 
 # Views
 gem 'rabl', '~> 0.9.1'
@@ -16,8 +17,8 @@ gem 'pg'
 gem 'unicorn'
 
 # Async
-gem "redis", "~> 3.0.6"
-gem "sidekiq", "~> 2.17.2"
+# gem "redis", "~> 3.0.6"
+# gem "sidekiq", "~> 2.17.2"
 
 # Dev
 group :test, :development do
