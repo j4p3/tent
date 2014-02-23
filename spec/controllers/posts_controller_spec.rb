@@ -1,40 +1,31 @@
 require 'spec_helper'
 
-describe PostsController do
+describe "Posts Controller" do
 
-  describe "GET 'index'" do
-    it "returns http success" do
-      get 'index'
-      response.should be_success
+    describe "#index action" do
+      before do
+        FactoryGirl.create_list(:post, 10)
+      end
+
+      
+      it "lists posts" do
+        get "/posts"
+        response.should be_success
+        expect(json['posts'].length).to eq(10)
+      end
     end
-  end
 
-  describe "GET 'show'" do
-    it "returns http success" do
-      get 'show'
-      response.should be_success
+    describe "#show action" do
+      before do
+        @post = FactoryGirl.create(:post)
+      end
+
+      it "shows a given post" do
+        get "/posts/#{@post.id}"
+        response.status.should eq(200)
+        puts json
+        expect(json['headline']).to eq(@post.headline)
+        expect(json['resolved']).to eq(nil)
+      end
     end
-  end
-
-  describe "GET 'create'" do
-    it "returns http success" do
-      get 'create'
-      response.should be_success
-    end
-  end
-
-  describe "GET 'update'" do
-    it "returns http success" do
-      get 'update'
-      response.should be_success
-    end
-  end
-
-  describe "GET 'delete'" do
-    it "returns http success" do
-      get 'delete'
-      response.should be_success
-    end
-  end
-
 end

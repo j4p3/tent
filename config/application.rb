@@ -9,7 +9,7 @@ Bundler.require(:default, Rails.env)
 module Tent
   class Application < Rails::Application
 
-    # CORS headers to allow external requests
+    # CORS headers to allow all external requests
     config.action_dispatch.default_headers = {
         'Access-Control-Allow-Origin' => '*',
         'Access-Control-Request-Method' => '*',
@@ -18,6 +18,9 @@ module Tent
     }
 
     config.api_only = true
+
+    # Explicitly include ActionDispatch test modules
+    # config.middleware.use ActionDispatch::TestResponse
 
 
     # Settings in config/environments/* take precedence over those specified here.

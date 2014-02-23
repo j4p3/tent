@@ -25,7 +25,7 @@ group :test, :development do
     gem 'annotate', '~> 2.5.0'
     gem 'faker', '~> 1.2.0'
     gem 'rspec-rails'
-    gem 'factory_girl_rails', '~> 4.3.0', :require => false
+    gem 'factory_girl_rails', '~> 4.4.0', :require => false
 end
 
 
