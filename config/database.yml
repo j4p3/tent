@@ -1,28 +1,28 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: daywon-api_development
+  database: tent_development
   pool: 10
   password: root
 
 test:
   adapter: postgresql
   encoding: unicode
-  database: daywon-api_test
+  database: tent_test
   pool: 10
   password: root
 
 staging:
   adapter: postgresql
   encoding: unicode
-  database: daywon-api_staging
+  database: tent_staging
   pool: 10
   password:
 
 production:
   adapter: postgresql
   encoding: unicode
-  database: daywon-api_production
+  database: tent_production
   pool: 10
   password:
 

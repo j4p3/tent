@@ -1,11 +1,13 @@
 class PostsController < ApplicationController
   def index
-    @posts = Post.all
+    # Return 'active' (non-resolved posts) and their tags to index view
+    @posts = Post.active.eager_load(:tags)
     render 'posts/index'
   end
 
   def show
-    @post = Post.find_by_id(params[:id])
+    # Return given post and its tags to show view. Expects params hash with id k/v.
+    @post = Post.includes(:tags).find_by_id(params[:id])
     render 'posts/show'
   end
 

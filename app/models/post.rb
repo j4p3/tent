@@ -12,13 +12,20 @@
 #
 
 class Post < ActiveRecord::Base
-  # Scoping. Show only non-resolved posts.
+  # Associations
+  has_and_belongs_to_many :tags
+  
+  # Scoping
+  # Show only non-resolved posts.
   scope :active, -> { where(resolved: false) }
 
-  # Callbacks. Mark datetime of resolution.
+  # Callbacks
+  # Mark datetime of resolution.
   after_update :mark_resolved_at, :if => :resolved_changed?
 
-  def mark_resolved_at
-    self.resolved_at = DateTime.now
-  end
+  private
+  
+      def mark_resolved_at
+        self.resolved_at = DateTime.now
+      end
 end
