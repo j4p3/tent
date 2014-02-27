@@ -7,7 +7,7 @@
 #  content     :text
 #  created_at  :datetime
 #  updated_at  :datetime
-#  resolved    :boolean
+#  resolved    :boolean          default(FALSE)
 #  resolved_at :datetime
 #
 

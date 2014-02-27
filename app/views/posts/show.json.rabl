@@ -1,8 +1,11 @@
 object @post
-    attributes :id, :headline, :content, :updated_at
-    code :tags do |post|
-        post.tag_ids
+
+node :post do |post|
+    partial "posts/post/object", object: post
+end
+
+node :tags do |post|
+    post.tags.map do |tag|
+        partial "tags/tag/object", object: tag, root: false
     end
-    child :tags do
-        attributes :id, :title
-    end
+end
