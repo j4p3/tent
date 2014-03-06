@@ -7,6 +7,7 @@ gem 'rails-api', '~> 0.1.0'
 
 # Views
 gem 'rabl', '~> 0.9.1'
+gem 'active_model_serializers', '~> 0.8.1'
 
 # Auth
 gem 'devise'
