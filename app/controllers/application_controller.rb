@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::API
   before_action :cors
 
+  def not_found
+    raise ActionController::RoutingError.new('Not Found')
+  end
+
   def cors
     if request.method == 'OPTIONS'
       headers["Access-Control-Allow-Origin"] = "*"
