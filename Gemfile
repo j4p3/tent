@@ -16,6 +16,7 @@ gem 'devise'
 gem 'rails_12factor'
 gem 'pg'
 gem 'unicorn'
+gem 'faker', '~> 1.2.0'
 
 # Async
 # gem "redis", "~> 3.0.6"
@@ -24,7 +25,6 @@ gem 'unicorn'
 # Dev
 group :test, :development do
     gem 'annotate', '~> 2.5.0'
-    gem 'faker', '~> 1.2.0'
     gem 'rspec-rails'
     gem 'factory_girl_rails', '~> 4.4.0', :require => false
 end
