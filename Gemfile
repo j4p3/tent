@@ -9,7 +9,7 @@ gem 'rails-api', '~> 0.1.0'
 gem 'active_model_serializers', '~> 0.8.1'
 
 # Auth
-gem 'devise'
+# gem 'devise'
 
 # DB & Heroku
 gem 'rails_12factor'
