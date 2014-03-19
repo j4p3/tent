@@ -2,14 +2,14 @@ class TagsController < ApplicationController
   def index
     # Return all tags (usually called with params)
     if params[:ids]
-      @tags = Tag.find(params[:ids])
+      @tags = Tag.find(params[:ids]).eager_load(:posts)
     elsif params
-      @tags = Tag.where(params.except(:format, :action, :action, :controller))
+      @tags = Tag.where(params.except(:format, :action, :action, :controller)).eager_load(:posts)
       status = :not_found if @tags.empty?
     else
-      @tags = Tag.all
+      @tags = Tag.eager_load(:posts)
     end
-    render 'tags/index', status: status
+    render json: @tags, status: status
   end
 
   def show
