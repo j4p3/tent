@@ -6,7 +6,6 @@ gem 'rails', '4.0.2'
 gem 'rails-api', '~> 0.1.0'
 
 # Views
-gem 'rabl', '~> 0.9.1'
 gem 'active_model_serializers', '~> 0.8.1'
 
 # Auth
@@ -28,8 +27,6 @@ group :test, :development do
     gem 'rspec-rails'
     gem 'factory_girl_rails', '~> 4.4.0', :require => false
 end
-
-ruby "2.0.0"
 
 
 # To use ActiveModel has_secure_password
