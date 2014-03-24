@@ -25,6 +25,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def complete_callback(user)
     # Log in and redirect user's browser to clientside app with token information.
     sign_in user, store: false
-    redirect_to Tent::Application.config.clients.url
+    redirect_to generate_url(Tent::Application.config.clients.url, uid: user.id)
+  end
+
+  def generate_url(url, params={})
+    "#{URI(url).to_s}?#{params.to_query}"
   end
 end

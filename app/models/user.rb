@@ -31,8 +31,10 @@ class User < ActiveRecord::Base
   end
 
   def self.from_facebook(auth)
-    logger.debug auth.inspect
     if new_user = User.find_by_email(auth.info.email)
+      new_user.name = auth.info.name
+      new_user.email = auth.info.email
+      new_user.avatar = auth.info.image
       new_user.facebook_token = auth.credentials.token
       new_user
     else
