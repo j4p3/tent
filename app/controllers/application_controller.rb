@@ -1,10 +1,22 @@
 class ApplicationController < ActionController::API
+  # Required for Devise
+  include ActionController::StrongParameters
+  include ActionController::MimeResponds
+
+  # Run all reqeusts through CORS filter
   before_action :cors
 
+  # Overwrite 404
   def not_found
     raise ActionController::RoutingError.new('Not Found')
   end
 
+  # Overwrite routing error handler
+  def routing_error
+    raise ActionController::RoutingError.new(params[:path])
+  end
+
+  # Set appropriate headers for CORS requests
   def cors
     if request.method == 'OPTIONS'
       headers["Access-Control-Allow-Origin"] = "*"
@@ -15,10 +27,7 @@ class ApplicationController < ActionController::API
     end
   end
 
-  def routing_error
-    raise ActionController::RoutingError.new(params[:path])
-  end
-
+  # Render errors in JSON
   rescue_from Exception do |e|
     error(e)
   end

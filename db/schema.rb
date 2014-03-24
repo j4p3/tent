@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140307175531) do
+ActiveRecord::Schema.define(version: 20140324001110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,5 +37,25 @@ ActiveRecord::Schema.define(version: 20140307175531) do
   end
 
   add_index "tags", ["title"], name: "index_tags_on_title", unique: true, using: :btree
+
+  create_table "users", force: true do |t|
+    t.string   "email",                default: "", null: false
+    t.integer  "sign_in_count",        default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "facebook_token"
+    t.string   "authentication_token"
+    t.string   "name"
+    t.string   "avatar"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
 end

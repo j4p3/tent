@@ -15,5 +15,5 @@
 /log/*.log
 /tmp
 
-# Ignore secrets
-config/secrets/
+# Ignore credential files
+/config/secrets/

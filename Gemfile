@@ -9,7 +9,8 @@ gem 'rails-api', '~> 0.1.0'
 gem 'active_model_serializers', '~> 0.8.1'
 
 # Auth
-# gem 'devise'
+gem 'devise', '~> 3.2.4'
+gem 'omniauth-facebook', '~> 1.6.0'
 
 # DB & Heroku
 gem 'rails_12factor'
