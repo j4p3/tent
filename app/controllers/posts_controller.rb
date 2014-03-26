@@ -12,7 +12,7 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(params[:post].except :tags, :updated_at)
+    @post = current_user.posts.new(params[:post].except :tags, :updated_at)
 
     if @post.save
       if params[:post][:tags].respond_to? :each

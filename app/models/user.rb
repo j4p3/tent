@@ -11,6 +11,7 @@
 #  last_sign_in_ip      :string(255)
 #  provider             :string(255)
 #  uid                  :string(255)
+#  facebook_token       :string(255)
 #  authentication_token :string(255)
 #  name                 :string(255)
 #  avatar               :string(255)
@@ -19,6 +20,9 @@
 #
 
 class User < ActiveRecord::Base
+  # Associations
+  has_many :posts
+
   # Concerns
   include TokenAuthenticable
 
@@ -35,6 +39,7 @@ class User < ActiveRecord::Base
       new_user.name = auth.info.name
       new_user.email = auth.info.email
       new_user.avatar = auth.info.image
+      new_user.link = auth.link
       new_user.facebook_token = auth.credentials.token
       new_user
     else
@@ -44,6 +49,7 @@ class User < ActiveRecord::Base
         user.name = auth.info.name
         user.email = auth.info.email
         user.avatar = auth.info.image
+        user.link = auth.link
         user.facebook_token = auth.credentials.token
       end
     end

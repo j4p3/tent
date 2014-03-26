@@ -3,6 +3,9 @@ class ApplicationController < ActionController::API
   include ActionController::StrongParameters
   include ActionController::MimeResponds
 
+  # Concerns
+  # include TokenAuthentication
+
   # Run all reqeusts through CORS filter
   before_action :cors
 
@@ -18,11 +21,11 @@ class ApplicationController < ActionController::API
 
   # Set appropriate headers for CORS requests
   def cors
+    headers["Access-Control-Allow-Origin"] = "*"
+    headers['Access-Control-Request-Method'] = "*"
+    headers["Access-Control-Allow-Methods"] = %w{GET POST PUT DELETE OPTIONS}.join(",")
+    headers["Access-Control-Allow-Headers"] = %w{Origin Accept Content-Type X-Requested-With X-Tent-Id X-CSRF-Token}.join(",")
     if request.method == 'OPTIONS'
-      headers["Access-Control-Allow-Origin"] = "*"
-      headers['Access-Control-Request-Method'] = "*"
-      headers["Access-Control-Allow-Methods"] = %w{GET POST PUT DELETE OPTIONS}.join(",")
-      headers["Access-Control-Allow-Headers"] = %w{Origin Accept Content-Type X-Requested-With X-CSRF-Token}.join(",")
       head(:ok)
     end
   end
@@ -34,12 +37,12 @@ class ApplicationController < ActionController::API
 
   protected
 
-  def error(e)
-    error_info = {
-      :error => "internal-server-error",
-      :exception => "#{e.class.name} : #{e.message}",
-    }
-    error_info[:trace] = e.backtrace[0,10] if Rails.env.development?
-    render :json => error_info.to_json, :status => 500
-  end
+    def error(e)
+      error_info = {
+        :error => "internal-server-error",
+        :exception => "#{e.class.name} : #{e.message}",
+      }
+      error_info[:trace] = e.backtrace[0,10] if Rails.env.development?
+      render :json => error_info.to_json, :status => 500
+    end
 end

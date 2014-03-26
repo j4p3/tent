@@ -4,7 +4,7 @@ class TagsController < ApplicationController
     if params[:ids]
       @tags = Tag.find(params[:ids]).eager_load(:posts)
     elsif params
-      @tags = Tag.where(params.except(:format, :action, :action, :controller)).eager_load(:posts)
+      @tags = Tag.where(params.except(:format, :action, :controller)).eager_load(:posts)
       status = :not_found if @tags.empty?
     else
       @tags = Tag.eager_load(:posts)

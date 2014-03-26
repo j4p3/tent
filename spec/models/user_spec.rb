@@ -11,6 +11,7 @@
 #  last_sign_in_ip      :string(255)
 #  provider             :string(255)
 #  uid                  :string(255)
+#  facebook_token       :string(255)
 #  authentication_token :string(255)
 #  name                 :string(255)
 #  avatar               :string(255)

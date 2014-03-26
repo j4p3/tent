@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140324001110) do
+ActiveRecord::Schema.define(version: 20140326204110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20140324001110) do
     t.datetime "updated_at"
     t.boolean  "resolved",    default: false
     t.datetime "resolved_at"
+    t.integer  "user_id"
   end
 
   create_table "posts_tags", id: false, force: true do |t|
@@ -53,6 +54,7 @@ ActiveRecord::Schema.define(version: 20140324001110) do
     t.string   "avatar"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "link"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree

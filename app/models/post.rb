@@ -9,11 +9,13 @@
 #  updated_at  :datetime
 #  resolved    :boolean          default(FALSE)
 #  resolved_at :datetime
+#  user_id     :integer
 #
 
 class Post < ActiveRecord::Base
   # Associations
   has_and_belongs_to_many :tags
+  belongs_to :user
   
   # Scoping
   # Show only non-resolved posts.
@@ -23,9 +25,9 @@ class Post < ActiveRecord::Base
   # Mark datetime of resolution.
   after_update :mark_resolved_at, :if => :resolved_changed?
 
-  private
+  protected
   
-      def mark_resolved_at
-        self.resolved_at = DateTime.now
-      end
+    def mark_resolved_at
+      self.resolved_at = DateTime.now
+    end
 end
