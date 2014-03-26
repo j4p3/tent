@@ -20,7 +20,10 @@ module Tent
     config.api_only = true
 
     config.clients = ActiveSupport::OrderedOptions.new
-    facebook_config = YAML.load_file("#{::Rails.root}/config/secrets/facebook.yml")["#{Rails.env}"]
+    facebook_config = {
+      "client_id" => ENV["FACEBOOK_ID_#{Rails.env}"],
+      "client_secret" => ENV["FACEBOOK_SECRET_#{Rails.env}"]
+    }
 
     config.clients.facebook_id = facebook_config["client_id"]
     config.clients.facebook_secret = facebook_config["client_secret"]

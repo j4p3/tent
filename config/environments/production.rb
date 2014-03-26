@@ -1,6 +1,9 @@
 Tent::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # Client url
+  config.clients.url = 'http://inthetent.com/#/sessions/callback'
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 
