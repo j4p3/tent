@@ -57,6 +57,6 @@ module TokenAuthentication
   end
 
   def header_uid
-    request.headers["UID"]
+    request.headers["X-Tent-Id"]
   end
 end
