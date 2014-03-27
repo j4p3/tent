@@ -12,7 +12,7 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = current_user.posts.new(params[:post].except :tags, :updated_at)
+    @post = current_user.posts.new(post_params)
 
     if @post.save
       if params[:post][:tags].respond_to? :each
@@ -29,7 +29,7 @@ class PostsController < ApplicationController
   def update
     @post = Post.find_by_id(params[:id])
 
-    if @post.update(params[:post].except :tags, :updated_at)
+    if @post.update(post_params)
       if params[:post].has_key? :tags
         @post.tags.clear
         if params[:post][:tags].respond_to? :each
@@ -42,6 +42,8 @@ class PostsController < ApplicationController
     else
       render json: @post.errors, status: :unprocessable_entity
     end
+  rescue Exception => e
+    raise e
   end
 
   def delete
@@ -51,3 +53,9 @@ class PostsController < ApplicationController
     head :no_content
   end
 end
+
+private
+
+  def post_params
+    params.require(:post).permit(:headline, :content, :resolved)
+  end

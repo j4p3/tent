@@ -3,11 +3,11 @@ class ApplicationController < ActionController::API
   include ActionController::StrongParameters
   include ActionController::MimeResponds
 
-  # Concerns
-  # include TokenAuthentication
-
   # Run all reqeusts through CORS filter
   before_action :cors
+
+  # Concerns
+  include TokenAuthentication
 
   # Overwrite 404
   def not_found
