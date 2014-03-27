@@ -19,8 +19,9 @@ module TokenAuthentication
   private
 
   def process_user!
-    user = header_uid && User.find(header_uid)
-    sign_in user, store: false
+    if user = header_uid && User.find(header_uid)
+      sign_in user, store: false
+    end
   end
 
   # => Params: either query string user_email & authentication_token,

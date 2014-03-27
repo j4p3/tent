@@ -46,6 +46,6 @@ module Tent
     # Devise options:
     # Necessary additions for Devise to function without complaining, but not used by application.
     config.middleware.use Rack::Session::Cookie
-    # config.middleware.use ActionDispatch::Flash
+    config.middleware.use ActionDispatch::Flash
   end
 end
