@@ -20,6 +20,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         logger.debug "Invalid user from facebook"
       end
     end
+  rescue Exception => e
+    raise e
   end
 
   protected

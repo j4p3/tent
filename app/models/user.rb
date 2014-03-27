@@ -53,5 +53,7 @@ class User < ActiveRecord::Base
         user.facebook_token = auth.credentials.token
       end
     end
+  rescue Exception => e
+    raise e
   end
 end
