@@ -4,6 +4,7 @@ development:
   database: tent_development
   pool: 10
   password: root
+  host: 127.0.0.1
 
 test:
   adapter: postgresql

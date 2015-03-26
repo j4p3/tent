@@ -1,4 +1,9 @@
+require "application_responder"
+
 class ApplicationController < ActionController::API
+  self.responder = ApplicationResponder
+  respond_to :html
+
   # Required for Devise
   include ActionController::StrongParameters
   include ActionController::MimeResponds
