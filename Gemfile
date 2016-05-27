@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Core
-ruby '2.2.0'
+ruby '2.2.3'
 gem 'rails', '~> 4.2.0'
 gem 'rails-api', '~> 0.4.0'
 gem 'responders', '~> 2.1.0'
