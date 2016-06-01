@@ -3,7 +3,7 @@
 # Table name: posts
 #
 #  id          :integer          not null, primary key
-#  headline    :string(255)
+#  headline    :string
 #  content     :text
 #  created_at  :datetime
 #  updated_at  :datetime
@@ -14,8 +14,8 @@
 
 class Post < ActiveRecord::Base
   # Associations
-  has_and_belongs_to_many :tags
   belongs_to :user
+  belongs_to :tent
   
   # Scoping
   # Show only non-resolved posts.

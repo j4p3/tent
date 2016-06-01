@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: tags
+#
+#  id         :integer          not null, primary key
+#  title      :string
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class TagSerializer < ActiveModel::Serializer
   attributes :id, :title
   embed :ids, :include => true

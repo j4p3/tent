@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Tent::Application.load_tasks
+TentApi::Application.load_tasks
