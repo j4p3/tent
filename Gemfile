@@ -2,12 +2,12 @@ source 'https://rubygems.org'
 
 # Core
 ruby '2.2.3'
-gem 'rails', '~> 4.2.0'
+gem 'rails', '~> 4.2.6'
 gem 'rails-api', '~> 0.4.0'
 gem 'responders', '~> 2.1.0'
 
 # Views
-gem 'active_model_serializers', '~> 0.9.3'
+gem 'active_model_serializers', '~> 0.10.0'
 
 # Auth
 gem 'devise', '~> 3.4.1'
@@ -22,10 +22,13 @@ gem 'unicorn', '~> 4.8.3'
 # gem "redis", "~> 3.0.6"
 # gem "sidekiq", "~> 2.17.2"
 
+# Monitoring
+gem 'skylight'
+
 # Dev
 group :test, :development do
     gem 'annotate', '~> 2.6.5'
     gem 'rspec-rails', '~> 3.2.0'
     gem 'factory_girl_rails', '~> 4.5.0', :require => false
-    gem 'faker', '~> 1.4.3'
+    gem 'faker', '~> 1.6.3'
 end
