@@ -10,20 +10,23 @@ gem 'responders', '~> 2.1.0'
 gem 'active_model_serializers', '~> 0.10.0'
 
 # Auth
-gem 'devise', '~> 3.4.1'
+gem 'devise', '~> 4.1.1'
 gem 'omniauth-facebook', '~> 2.0.0'
 
 # DB & Heroku
-gem 'rails_12factor', '~> 0.0.3'
+gem 'rails_12factor', '~> 0.0.3', group: :production
 gem 'pg', '~> 0.18.1'
-gem 'unicorn', '~> 4.8.3'
+gem 'unicorn', '~> 5.1.0'
+
+# Firebase wrapper
+gem 'firebase', '~> 0.2.6'
 
 # Async
 # gem "redis", "~> 3.0.6"
 # gem "sidekiq", "~> 2.17.2"
 
 # Monitoring
-gem 'skylight'
+gem 'skylight', '~> 0.10.3'
 
 # Dev
 group :test, :development do
