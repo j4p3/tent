@@ -27,13 +27,19 @@ module TentApi
     }
 
     config.clients = ActiveSupport::OrderedOptions.new
+    config_secrets = YAML.load_file("#{::Rails.root}/config/secrets.yml")
     facebook_config = {
-      client_id: ENV["FACEBOOK_ID_#{Rails.env}"] || YAML.load_file("#{::Rails.root}/config/secrets.yml")["facebook"]["#{Rails.env}"]["client_id"],
-      client_secret: ENV["FACEBOOK_SECRET_#{Rails.env}"] || YAML.load_file("#{::Rails.root}/config/secrets.yml")["facebook"]["#{Rails.env}"]["client_secret"]
+      client_id: ENV["FACEBOOK_ID_#{Rails.env}"] || config_secrets["facebook"]["#{Rails.env}"]["client_id"],
+      client_secret: ENV["FACEBOOK_SECRET_#{Rails.env}"] || config_secrets["facebook"]["#{Rails.env}"]["client_secret"]
+    }
+
+    firebase_config = {
+        repo: ENV["FIREBASE_REPO_#{Rails.env}"] || config_secrets["firebase"]["#{Rails.env}"]["repo"]
     }
 
     config.clients.facebook_id = facebook_config[:client_id]
     config.clients.facebook_secret = facebook_config[:client_secret]
+    config.clients.firebase_repo = firebase_config[:repo]
 
     # Explicitly include ActionDispatch test modules
     # config.middleware.use ActionDispatch::TestResponse
@@ -46,7 +52,7 @@ module TentApi
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    # required for Omniauth
-    config.middleware.use Rack::Session::Cookie
+    # required for Omniauth?
+    # config.middleware.use Rack::Session::Cookie
   end
 end
