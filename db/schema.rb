@@ -18,9 +18,13 @@ ActiveRecord::Schema.define(version: 20160531213822) do
 
   create_table "memberships", force: :cascade do |t|
     t.integer  "user_id"
+    t.integer  "tent_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_index "memberships", ["tent_id"], name: "index_memberships_on_tent_id", using: :btree
+  add_index "memberships", ["user_id"], name: "index_memberships_on_user_id", using: :btree
 
   create_table "posts", force: :cascade do |t|
     t.string   "headline"
