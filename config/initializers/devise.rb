@@ -234,7 +234,7 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
 
   # OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE if Rails.env.development?  # Bugfix for localhost
-  config.omniauth :facebook, Tent::Application.config.clients.facebook_id, Tent::Application.config.clients.facebook_secret, {:scope => 'basic_info, user_groups, email, offline_access', :client_options => {:ssl => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}}}
+  config.omniauth :facebook, TentApi::Application.config.clients.facebook_id, TentApi::Application.config.clients.facebook_secret, {:scope => 'basic_info, user_groups, email, offline_access', :client_options => {:ssl => {:ca_file => '/usr/lib/ssl/certs/ca-certificates.crt'}}}
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

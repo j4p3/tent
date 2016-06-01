@@ -1,4 +1,4 @@
-Tent::Application.routes.draw do
+TentApi::Application.routes.draw do
   # Handle OPTIONS requests
   match '*all', to: 'application#cors', via: [:options]
   match 'users', to: 'users/users#index', via: [:get], defaults: { format: 'json' }
@@ -8,8 +8,9 @@ Tent::Application.routes.draw do
   # General requests
   resources :posts, except: [:new, :edit], defaults: { format: 'json' }
   resources :tags, except: [:new, :edit, :update], defaults: { format: 'json' }
+  resources :tents
 
-  root to: 'posts#index'
+  root to: 'application#routing_error'
 
   # Missing route catch-all
   match '*path', :to => 'application#routing_error', :via => :all, defaults: { format: 'json' }
