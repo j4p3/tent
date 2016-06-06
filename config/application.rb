@@ -53,6 +53,6 @@ module TentApi
     # config.i18n.default_locale = :de
 
     # required for Omniauth?
-    # config.middleware.use Rack::Session::Cookie
+    config.middleware.use Rack::Session::Cookie
   end
 end

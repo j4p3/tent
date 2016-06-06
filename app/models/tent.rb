@@ -26,6 +26,8 @@ class Tent < ActiveRecord::Base
     end.flatten
   end
 
+  private
+
   def self.tree_for(i)
     where("#{table_name}.id IN (#{tree_sql_for(instance)})").order("#{table_name}.id")
   end

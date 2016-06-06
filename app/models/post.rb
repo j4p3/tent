@@ -10,6 +10,7 @@
 #  resolved    :boolean          default(FALSE)
 #  resolved_at :datetime
 #  user_id     :integer
+#  tent_id     :integer
 #
 
 class Post < ActiveRecord::Base
