@@ -17,6 +17,7 @@ gem 'omniauth-facebook', '~> 2.0.0'
 gem 'rails_12factor', '~> 0.0.3', group: :production
 gem 'pg', '~> 0.18.1'
 gem 'unicorn', '~> 5.1.0'
+gem 'faker', '~> 1.6.3'
 
 # Firebase wrapper
 gem 'firebase', '~> 0.2.6'
@@ -33,5 +34,4 @@ group :test, :development do
     gem 'annotate', '~> 2.6.5'
     gem 'rspec-rails', '~> 3.2.0'
     gem 'factory_girl_rails', '~> 4.5.0', :require => false
-    gem 'faker', '~> 1.6.3'
 end
