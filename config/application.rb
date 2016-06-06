@@ -35,7 +35,7 @@ module TentApi
 
     firebase_config = {
         repo: ENV["FIREBASE_REPO_#{Rails.env}"] || config_secrets["firebase"]["#{Rails.env}"]["repo"],
-        base: ENV["FIREBASE_ROOT_#{Rails.env}"] || config_secrets["firebase"]["#{Rails.env}"]["root"]
+        root: ENV["FIREBASE_ROOT_#{Rails.env}"] || config_secrets["firebase"]["#{Rails.env}"]["root"]
     }
 
     config.clients.facebook_id = facebook_config[:client_id]
