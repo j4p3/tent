@@ -1,8 +1,9 @@
 require 'faker'
 require 'firebase'
 
-firebase_repo = TentApi::Application.config.clients.firebase_repo
-firebase = Firebase::Client.new("https://#{firebase_repo}.firebaseio.com/")
+fb_repo = TentApi::Application.config.clients.firebase_repo
+fb_root = TentApi::Application.config.clients.firebase_root
+firebase = Firebase::Client.new("https://#{fb_repo}.firebaseio.com/")
 
 user = User.create(email: Faker::Internet.email, avatar: "http://placekitten.com/100/9#{Random.rand(10)}", name: Faker::StarWars.character)
 
@@ -18,11 +19,11 @@ user.tents << second_p_tent
   first_post = user.posts.new(headline: "#{Faker::StarWars.character} and #{Faker::Beer.name}", content: Faker::Hipster.sentence, resolved: false, tent: first_p_tent)
   second_post = user.posts.new(headline: "#{Faker::Company.catch_phrase} in #{Faker::StarWars.planet}", content: Faker::Hipster.sentence, resolved: false, tent: second_p_tent)
 
-  first_post_record = firebase.push('v3/posts', first_post.as_json())
-  second_post_record = firebase.push('v3/posts', second_post.as_json())
+  first_post_record = firebase.push(fb_root + '/posts', first_post.as_json())
+  second_post_record = firebase.push(fb_root + '/posts', second_post.as_json())
 
   4.times do
-    firebase.push('v3/stream', {
+    firebase.push(fb_root + '/stream', {
       device: '',
       image: { uri: "http://thecatapi.com/api/images/get" },
       name: user.name,
@@ -30,7 +31,7 @@ user.tents << second_p_tent
       text: Faker::Hipster.sentence,
       created: Firebase::ServerValue::TIMESTAMP
     })
-    firebase.push('v3/stream', {
+    firebase.push(fb_root + '/stream', {
       device: '',
       image: { uri: "http://thecatapi.com/api/images/get" },
       name: user.name,
@@ -53,11 +54,11 @@ end
     first_post = user.posts.new(headline: "#{Faker::StarWars.quote}", content: Faker::Hipster.sentence, resolved: false, tent: first_tent)
     second_post = user.posts.new(headline: "#{Faker::Company.catch_phrase}", content: Faker::Company.bs.capitalize, resolved: false, tent: second_tent)
 
-    first_post_record = firebase.push('v3/posts', first_post.as_json())
-    second_post_record = firebase.push('v3/posts', second_post.as_json())
+    first_post_record = firebase.push(fb_root + '/posts', first_post.as_json())
+    second_post_record = firebase.push(fb_root + '/posts', second_post.as_json())
 
     4.times do
-      firebase.push('v3/stream', {
+      firebase.push(fb_root + '/stream', {
         device: '',
         image: { uri: "http://thecatapi.com/api/images/get" },
         name: user.name,
@@ -65,7 +66,7 @@ end
         text: Faker::Hipster.sentence,
         created: Firebase::ServerValue::TIMESTAMP
       })
-      firebase.push('v3/stream', {
+      firebase.push(fb_root + '/stream', {
         device: '',
         image: { uri: "http://thecatapi.com/api/images/get" },
         name: user.name,
