@@ -23,19 +23,19 @@ user.tents << second_p_tent
   second_post_record = firebase.push(fb_root + '/posts', second_post.as_json())
 
   4.times do
-    firebase.push(fb_root + '/stream', {
+    firebase.push("#{fb_root}/posts/#{first_post_record.body['name']}/stream", {
       device: '',
       image: { uri: "http://thecatapi.com/api/images/get" },
       name: user.name,
-      post_id: first_post_record.body['name'],
+      # post_id: first_post_record.body['name'],
       text: Faker::Hipster.sentence,
       created: Firebase::ServerValue::TIMESTAMP
     })
-    firebase.push(fb_root + '/stream', {
+    firebase.push("#{fb_root}/posts/#{second_post_record.body['name']}/stream", {
       device: '',
       image: { uri: "http://thecatapi.com/api/images/get" },
       name: user.name,
-      post_id: second_post_record.body['name'],
+      # post_id: second_post_record.body['name'],
       text: Faker::Hipster.sentence,
       created: Firebase::ServerValue::TIMESTAMP
     })
@@ -58,19 +58,19 @@ end
     second_post_record = firebase.push(fb_root + '/posts', second_post.as_json())
 
     4.times do
-      firebase.push(fb_root + '/stream', {
+      firebase.push("#{fb_root}/posts/#{first_post_record.body['name']}/stream", {
         device: '',
         image: { uri: "http://thecatapi.com/api/images/get" },
         name: user.name,
-        post_id: first_post_record.body['name'],
+        # post_id: first_post_record.body['name'],
         text: Faker::Hipster.sentence,
         created: Firebase::ServerValue::TIMESTAMP
       })
-      firebase.push(fb_root + '/stream', {
+      firebase.push("#{fb_root}/posts/#{second_post_record.body['name']}/stream", {
         device: '',
         image: { uri: "http://thecatapi.com/api/images/get" },
         name: user.name,
-        post_id: second_post_record.body['name'],
+        # post_id: second_post_record.body['name'],
         text: Faker::Hipster.sentence,
         created: Firebase::ServerValue::TIMESTAMP
       })
