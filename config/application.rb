@@ -17,6 +17,7 @@ module TentApi
 
     # Only use API modules
     config.api_only = true
+    config.debug_exception_response_format = :api
 
     # CORS headers to allow all external requests
     config.action_dispatch.default_headers = {

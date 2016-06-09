@@ -22,6 +22,7 @@
 
 class User < ActiveRecord::Base
   # Associations
+  has_secure_password
   has_many :posts
   has_many :memberships
   has_many :tents, through: :memberships

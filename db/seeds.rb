@@ -5,7 +5,7 @@ fb_repo = TentApi::Application.config.clients.firebase_repo
 fb_root = TentApi::Application.config.clients.firebase_root
 firebase = Firebase::Client.new("https://#{fb_repo}.firebaseio.com/")
 
-user = User.create(email: Faker::Internet.email, avatar: "http://placekitten.com/100/9#{Random.rand(10)}", name: Faker::StarWars.character)
+user = User.create(email: Faker::Internet.email, avatar: "http://placekitten.com/100/9#{Random.rand(10)}", name: Faker::StarWars.character, password: 'password')
 
 first_interest = Faker::Beer.style
 second_interest = "WeWork Labs"

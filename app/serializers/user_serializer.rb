@@ -21,7 +21,7 @@
 #
 
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :name, :avatar, :link
+  attributes :id, :name, :email, :avatar
 rescue Exception => e
   raise e if Rails.env.development?
 end
