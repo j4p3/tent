@@ -16,28 +16,42 @@ user.tents << first_p_tent
 user.tents << second_p_tent
 
 9.times do
-  first_post = user.posts.new(headline: "#{Faker::StarWars.character} and #{Faker::Beer.name}", content: Faker::Hipster.sentence, resolved: false, tent: first_p_tent)
-  second_post = user.posts.new(headline: "#{Faker::Company.catch_phrase} in #{Faker::StarWars.planet}", content: Faker::Hipster.sentence, resolved: false, tent: second_p_tent)
+  first_post = ({
+    user_id: user.id,
+    headline: "#{Faker::StarWars.character} and #{Faker::Beer.name}",
+    content: Faker::Hipster.sentence,
+    resolved: false,
+    tent_id: first_p_tent.id,
+    created_at: Firebase::ServerValue::TIMESTAMP,
+  })
+  second_post = ({
+    user_id: user.id,
+    headline: "#{Faker::Company.catch_phrase} in #{Faker::StarWars.planet}",
+    content: Faker::Hipster.sentence,
+    resolved: false,
+    tent_id: second_p_tent.id,
+    created_at: Firebase::ServerValue::TIMESTAMP,
+  })
 
-  first_post_record = firebase.push(fb_root + '/posts', first_post.as_json())
-  second_post_record = firebase.push(fb_root + '/posts', second_post.as_json())
+  first_post_record = firebase.push("#{fb_root}/tents/#{first_p_tent.id}/posts", first_post.as_json())
+  second_post_record = firebase.push("#{fb_root}/tents/#{second_p_tent.id}/posts", second_post.as_json())
 
   4.times do
-    firebase.push("#{fb_root}/posts/#{first_post_record.body['name']}/stream", {
+    firebase.push("#{fb_root}/tents/#{first_p_tent.id}/posts/#{first_post_record.body['name']}/stream", {
       device: '',
       image: { uri: "http://thecatapi.com/api/images/get" },
       name: user.name,
       # post_id: first_post_record.body['name'],
       text: Faker::Hipster.sentence,
-      created: Firebase::ServerValue::TIMESTAMP
+      created_at: Firebase::ServerValue::TIMESTAMP,
     })
-    firebase.push("#{fb_root}/posts/#{second_post_record.body['name']}/stream", {
+    firebase.push("#{fb_root}/tents/#{second_p_tent.id}/posts/#{second_post_record.body['name']}/stream", {
       device: '',
       image: { uri: "http://thecatapi.com/api/images/get" },
       name: user.name,
       # post_id: second_post_record.body['name'],
       text: Faker::Hipster.sentence,
-      created: Firebase::ServerValue::TIMESTAMP
+      created_at: Firebase::ServerValue::TIMESTAMP,
     })
   end
 end
@@ -51,28 +65,42 @@ end
   user.tents << second_tent
 
   6.times do
-    first_post = user.posts.new(headline: "#{Faker::StarWars.quote}", content: Faker::Hipster.sentence, resolved: false, tent: first_tent)
-    second_post = user.posts.new(headline: "#{Faker::Company.catch_phrase}", content: Faker::Company.bs.capitalize, resolved: false, tent: second_tent)
+    first_post = ({
+      user_id: user.id,
+      headline: "#{Faker::StarWars.quote}",
+      content: Faker::Hipster.sentence,
+      resolved: false,
+      # tent_id: first_tent.id,
+      created_at: Firebase::ServerValue::TIMESTAMP,
+    })
+    second_post = ({
+      user_id: user.id,
+      headline: "#{Faker::Company.catch_phrase}",
+      content: Faker::Company.bs.capitalize,
+      resolved: false,
+      # tent_id: second_tent.id,
+      created_at: Firebase::ServerValue::TIMESTAMP,
+    })
 
-    first_post_record = firebase.push(fb_root + '/posts', first_post.as_json())
-    second_post_record = firebase.push(fb_root + '/posts', second_post.as_json())
+    first_post_record = firebase.push("#{fb_root}/tents/#{first_tent.id}/posts", first_post.as_json())
+    second_post_record = firebase.push("#{fb_root}/tents/#{second_tent.id}/posts", second_post.as_json())
 
     4.times do
-      firebase.push("#{fb_root}/posts/#{first_post_record.body['name']}/stream", {
+      firebase.push("#{fb_root}/tents/#{first_tent.id}/posts/#{first_post_record.body['name']}/stream", {
         device: '',
         image: { uri: "http://thecatapi.com/api/images/get" },
         name: user.name,
         # post_id: first_post_record.body['name'],
         text: Faker::Hipster.sentence,
-        created: Firebase::ServerValue::TIMESTAMP
+        created_at: Firebase::ServerValue::TIMESTAMP,
       })
-      firebase.push("#{fb_root}/posts/#{second_post_record.body['name']}/stream", {
+      firebase.push("#{fb_root}/tents/#{second_tent.id}/posts/#{second_post_record.body['name']}/stream", {
         device: '',
         image: { uri: "http://thecatapi.com/api/images/get" },
         name: user.name,
         # post_id: second_post_record.body['name'],
         text: Faker::Hipster.sentence,
-        created: Firebase::ServerValue::TIMESTAMP
+        created_at: Firebase::ServerValue::TIMESTAMP,
       })
     end
   end
