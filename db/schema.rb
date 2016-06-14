@@ -11,10 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160608195145) do
+ActiveRecord::Schema.define(version: 20160610204922) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "interaction_types", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "interactions", force: :cascade do |t|
+    t.integer  "interaction_type_id"
+    t.integer  "origin_user_id",      null: false
+    t.integer  "target_user_id"
+    t.integer  "tent_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "interactions", ["interaction_type_id"], name: "index_interactions_on_interaction_type_id", using: :btree
+  add_index "interactions", ["origin_user_id"], name: "index_interactions_on_origin_user_id", using: :btree
+  add_index "interactions", ["target_user_id"], name: "index_interactions_on_target_user_id", using: :btree
+  add_index "interactions", ["tent_id"], name: "index_interactions_on_tent_id", using: :btree
 
   create_table "memberships", force: :cascade do |t|
     t.integer  "user_id"
@@ -88,5 +108,7 @@ ActiveRecord::Schema.define(version: 20160608195145) do
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
+  add_foreign_key "interactions", "interaction_types"
+  add_foreign_key "interactions", "tents"
   add_foreign_key "tents", "users"
 end

@@ -2,6 +2,9 @@ class PostsController < ApplicationController
   def index
     # Return 'active' (non-resolved posts) and their tags to index view
     @posts = Post.active
+    if params[:tent_id]
+     @posts = @posts.in_tent(params[:tent_id])
+    end
     render json: @posts
   end
 
@@ -44,5 +47,5 @@ end
 private
 
   def post_params
-    params.require(:post).permit(:headline, :content, :resolved)
+    params.require(:post).permit(:headline, :content, :resolved, :tent_id)
   end

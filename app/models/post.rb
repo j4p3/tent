@@ -21,6 +21,7 @@ class Post < ActiveRecord::Base
   # Scoping
   # Show only non-resolved posts.
   scope :active, -> { where(resolved: false) }
+  scope :in_tent, -> (id) { where(tent_id: id) }
 
   # Callbacks
   # Mark datetime of resolution.

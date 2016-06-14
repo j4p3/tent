@@ -1,6 +1,11 @@
 require 'faker'
 require 'firebase'
 
+
+#############################################################################
+#   DUMMY DATA
+#############################################################################
+
 fb_repo = TentApi::Application.config.clients.firebase_repo
 fb_root = TentApi::Application.config.clients.firebase_root
 firebase = Firebase::Client.new("https://#{fb_repo}.firebaseio.com/")
@@ -16,40 +21,33 @@ user.tents << first_p_tent
 user.tents << second_p_tent
 
 9.times do
-  first_post = ({
-    user_id: user.id,
+  first_post = first_p_tent.posts.create(
+    user: user,
     headline: "#{Faker::StarWars.character} and #{Faker::Beer.name}",
     content: Faker::Hipster.sentence,
     resolved: false,
-    tent_id: first_p_tent.id,
     created_at: Firebase::ServerValue::TIMESTAMP,
-  })
-  second_post = ({
-    user_id: user.id,
+  )
+  second_post = second_p_tent.posts.create(
+    user: user,
     headline: "#{Faker::Company.catch_phrase} in #{Faker::StarWars.planet}",
     content: Faker::Hipster.sentence,
     resolved: false,
-    tent_id: second_p_tent.id,
     created_at: Firebase::ServerValue::TIMESTAMP,
-  })
-
-  first_post_record = firebase.push("#{fb_root}/tents/#{first_p_tent.id}/posts", first_post.as_json())
-  second_post_record = firebase.push("#{fb_root}/tents/#{second_p_tent.id}/posts", second_post.as_json())
+  )
 
   4.times do
-    firebase.push("#{fb_root}/tents/#{first_p_tent.id}/posts/#{first_post_record.body['name']}/stream", {
+    firebase.push("#{fb_root}/tents/#{first_p_tent.id}/posts/#{first_post.id}/stream", {
       device: '',
       image: { uri: "http://thecatapi.com/api/images/get" },
-      name: user.name,
-      # post_id: first_post_record.body['name'],
+      user: user,
       text: Faker::Hipster.sentence,
       created_at: Firebase::ServerValue::TIMESTAMP,
     })
-    firebase.push("#{fb_root}/tents/#{second_p_tent.id}/posts/#{second_post_record.body['name']}/stream", {
+    firebase.push("#{fb_root}/tents/#{second_p_tent.id}/posts/#{second_post.id}/stream", {
       device: '',
       image: { uri: "http://thecatapi.com/api/images/get" },
-      name: user.name,
-      # post_id: second_post_record.body['name'],
+      user: user,
       text: Faker::Hipster.sentence,
       created_at: Firebase::ServerValue::TIMESTAMP,
     })
@@ -65,43 +63,44 @@ end
   user.tents << second_tent
 
   6.times do
-    first_post = ({
-      user_id: user.id,
+    first_post = first_tent.posts.create(
+      user: user,
       headline: "#{Faker::StarWars.quote}",
       content: Faker::Hipster.sentence,
       resolved: false,
-      # tent_id: first_tent.id,
       created_at: Firebase::ServerValue::TIMESTAMP,
-    })
-    second_post = ({
-      user_id: user.id,
+    )
+    second_post = second_tent.posts.create(
+      user: user,
       headline: "#{Faker::Company.catch_phrase}",
       content: Faker::Company.bs.capitalize,
       resolved: false,
-      # tent_id: second_tent.id,
       created_at: Firebase::ServerValue::TIMESTAMP,
-    })
-
-    first_post_record = firebase.push("#{fb_root}/tents/#{first_tent.id}/posts", first_post.as_json())
-    second_post_record = firebase.push("#{fb_root}/tents/#{second_tent.id}/posts", second_post.as_json())
+    )
 
     4.times do
-      firebase.push("#{fb_root}/tents/#{first_tent.id}/posts/#{first_post_record.body['name']}/stream", {
+      firebase.push("#{fb_root}/tents/#{first_tent.id}/posts/#{first_post.id}/stream", {
         device: '',
         image: { uri: "http://thecatapi.com/api/images/get" },
-        name: user.name,
-        # post_id: first_post_record.body['name'],
+        user: user,
         text: Faker::Hipster.sentence,
         created_at: Firebase::ServerValue::TIMESTAMP,
       })
-      firebase.push("#{fb_root}/tents/#{second_tent.id}/posts/#{second_post_record.body['name']}/stream", {
+      firebase.push("#{fb_root}/tents/#{second_tent.id}/posts/#{second_post.id}/stream", {
         device: '',
         image: { uri: "http://thecatapi.com/api/images/get" },
-        name: user.name,
-        # post_id: second_post_record.body['name'],
+        user: user,
         text: Faker::Hipster.sentence,
         created_at: Firebase::ServerValue::TIMESTAMP,
       })
     end
   end
 end
+
+#############################################################################
+#   SEED DATA
+#############################################################################
+
+InteractionType.create(name: 'close')
+InteractionType.create(name: 'value')
+InteractionType.create(name: 'ping')
