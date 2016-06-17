@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160610204922) do
+ActiveRecord::Schema.define(version: 20160616200209) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,15 @@ ActiveRecord::Schema.define(version: 20160610204922) do
   end
 
   add_index "tags", ["title"], name: "index_tags_on_title", unique: true, using: :btree
+
+  create_table "tent_hierarchies", id: false, force: :cascade do |t|
+    t.integer "ancestor_id",   null: false
+    t.integer "descendant_id", null: false
+    t.integer "generations",   null: false
+  end
+
+  add_index "tent_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "tent_anc_desc_idx", unique: true, using: :btree
+  add_index "tent_hierarchies", ["descendant_id"], name: "tent_desc_idx", using: :btree
 
   create_table "tents", force: :cascade do |t|
     t.string   "name"

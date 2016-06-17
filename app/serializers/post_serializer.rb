@@ -3,7 +3,7 @@
 # Table name: posts
 #
 #  id          :integer          not null, primary key
-#  headline    :string
+#  headline    :string(255)
 #  content     :text
 #  created_at  :datetime
 #  updated_at  :datetime

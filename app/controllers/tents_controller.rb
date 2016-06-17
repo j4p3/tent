@@ -1,6 +1,6 @@
 class TentsController < ApplicationController
   def index
-    @tents = Tent.all
+    @tents = Tent.first.and_descendants_tree
     render json: @tents
   end
 

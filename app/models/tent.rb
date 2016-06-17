@@ -20,10 +20,38 @@ class Tent < ActiveRecord::Base
   belongs_to :parent, class_name: 'Tent', foreign_key: 'parent_id'
   has_many :children, class_name: 'Tent', foreign_key: 'parent_id'
 
-  def decendents
-    self + children.map do |c|
-      [c] + c.descendents  
+  def and_descendant_posts
+    # @todo implement
+    [self]
+  end
+
+  def descendant_posts
+    and_descendants.map(&:posts).flatten
+  end
+
+  def and_descendants
+    [self] + descendants
+  end
+
+  def descendants
+    children.map do |child|
+      [child] + child.descendants
     end.flatten
+  end
+
+  def and_descendants_tree
+    hash = self.serializable_hash
+    hash[:children] = self.descendants_tree
+    hash
+  end
+
+  def descendants_tree
+    children.map do |child|
+      foos = child.descendants_tree
+      hash = child.serializable_hash
+      hash[:children] = foos
+      hash
+    end
   end
 
   private

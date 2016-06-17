@@ -3,21 +3,22 @@
 # Table name: users
 #
 #  id                   :integer          not null, primary key
-#  email                :string           default(""), not null
+#  email                :string(255)      default(""), not null
 #  sign_in_count        :integer          default(0), not null
 #  current_sign_in_at   :datetime
 #  last_sign_in_at      :datetime
-#  current_sign_in_ip   :string
-#  last_sign_in_ip      :string
-#  provider             :string
-#  uid                  :string
-#  facebook_token       :string
-#  authentication_token :string
-#  name                 :string
-#  avatar               :string
+#  current_sign_in_ip   :string(255)
+#  last_sign_in_ip      :string(255)
+#  provider             :string(255)
+#  uid                  :string(255)
+#  facebook_token       :string(255)
+#  authentication_token :string(255)
+#  name                 :string(255)
+#  avatar               :string(255)
 #  created_at           :datetime
 #  updated_at           :datetime
-#  link                 :string
+#  link                 :string(255)
+#  password_digest      :string
 #
 
 class User < ActiveRecord::Base

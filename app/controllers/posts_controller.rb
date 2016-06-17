@@ -2,8 +2,9 @@ class PostsController < ApplicationController
   def index
     # Return 'active' (non-resolved posts) and their tags to index view
     @posts = Post.active
-    if params[:tent_id]
-     @posts = @posts.in_tent(params[:tent_id])
+    if params[:tent_id] && tent = Tent.find(params[:tent_id])
+      # @todo concat descendant posts with own posts
+     @posts = tent.descendant_posts
     end
     render json: @posts
   end
