@@ -10,12 +10,16 @@ class TentsController < ApplicationController
   end
 
   def create
-    @tent = current_user.tents.new(tent_params)
+    if user = User.find(tent_params[:user_id])
+      @tent = user.tents.new(tent_params)
 
-    if @tent.save
-      render json: @tent
+      if @tent.save
+        render json: @tent
+      else
+        render json: @tent.errors, status: :unprocessable_entity
+      end
     else
-      render json: @tent.errors, status: :unprocessable_entity
+      status :not_found
     end
   end
 
@@ -42,5 +46,5 @@ end
 private
 
   def tent_params
-    params.require(:tent).permit(:name, :desc, :image, :parent_id)
+    params.require(:tent).permit(:name, :desc, :image, :parent_id, :user_id)
   end

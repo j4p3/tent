@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   def index
     # Return 'active' (non-resolved posts) and their tags to index view
-    @posts = Post.active
+    @posts = Post.includes([:tent, :user]).active
     if params[:tent_id] && tent = Tent.find(params[:tent_id])
       # @todo concat descendant posts with own posts
      @posts = tent.descendant_posts
@@ -16,12 +16,16 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = current_user.posts.new(post_params)
+    if user = User.find(post_params[:user_id])
+      @post = user.posts.new(post_params)
 
-    if @post.save
-      render json: @post
+      if @post.save
+        render json: @post
+      else
+        render json: @post.errors, status: :unprocessable_entity
+      end
     else
-      render json: @post.errors, status: :unprocessable_entity
+      status :not_found
     end
   end
 
@@ -48,5 +52,5 @@ end
 private
 
   def post_params
-    params.require(:post).permit(:headline, :content, :resolved, :tent_id)
+    params.require(:post).permit(:headline, :content, :resolved, :tent_id, :user_id)
   end

@@ -14,7 +14,9 @@
 #
 
 class PostSerializer < ActiveModel::Serializer
-  attributes :id, :headline, :content, :updated_at, :tent_id
+  attributes :id, :headline, :content, :updated_at
+  has_one :tent
+  has_one :user
 rescue Exception => e
   raise e if Rails.env.development?
 end

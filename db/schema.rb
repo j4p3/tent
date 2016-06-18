@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160616200209) do
+ActiveRecord::Schema.define(version: 20160617230925) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,10 +29,12 @@ ActiveRecord::Schema.define(version: 20160616200209) do
     t.integer  "tent_id"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.integer  "post_id"
   end
 
   add_index "interactions", ["interaction_type_id"], name: "index_interactions_on_interaction_type_id", using: :btree
   add_index "interactions", ["origin_user_id"], name: "index_interactions_on_origin_user_id", using: :btree
+  add_index "interactions", ["post_id"], name: "index_interactions_on_post_id", using: :btree
   add_index "interactions", ["target_user_id"], name: "index_interactions_on_target_user_id", using: :btree
   add_index "interactions", ["tent_id"], name: "index_interactions_on_tent_id", using: :btree
 

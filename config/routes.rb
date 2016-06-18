@@ -12,6 +12,7 @@ TentApi::Application.routes.draw do
   resources :posts, except: [:new, :edit], defaults: { format: 'json' }
   resources :tags, except: [:new, :edit, :update], defaults: { format: 'json' }
   resources :tents, except: [:new, :edit]
+  resources :interactions, except: [:new, :edit]
 
   root to: 'application#routing_error'
 

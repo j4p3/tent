@@ -13,6 +13,11 @@
 
 class Interaction < ActiveRecord::Base
   belongs_to :interaction_type
-  belongs_to :user
+  belongs_to :user, foreign_key: 'origin_user_id'
+  belongs_to :target_user, class_name: 'User', foreign_key: 'target_user_id'
   belongs_to :tent
+  belongs_to :post
+
+  # @todo scope for fancy queries on all ints related to a user
+  # scope :pertaining_to, -> (id) { where(: id) }
 end

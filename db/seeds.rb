@@ -3,6 +3,14 @@ require 'firebase'
 
 
 #############################################################################
+#   SEED DATA
+#############################################################################
+
+InteractionType.create(name: 'close')
+InteractionType.create(name: 'value')
+InteractionType.create(name: 'ping')
+
+#############################################################################
 #   DUMMY DATA
 #############################################################################
 
@@ -97,10 +105,13 @@ generator.populate_tent(p_tent)
   generator.populate_tent(fall)
 end
 
-#############################################################################
-#   SEED DATA
-#############################################################################
+second_user = User.create(email: Faker::Internet.email,
+        avatar: "http://placekitten.com/100/9#{Random.rand(10)}",
+        name: Faker::StarWars.character,
+        password: 'password')
 
-InteractionType.create(name: 'close')
-InteractionType.create(name: 'value')
-InteractionType.create(name: 'ping')
+# seed interactions
+
+user.interactions.create(target_user: second_user, interaction_type: Interaction.first, post: Post.first)
+user.interactions.create(target_user: second_user, interaction_type: Interaction.second, post: Post.first)
+user.interactions.create(target_user: second_user, interaction_type: Interaction.third, post: Post.first)

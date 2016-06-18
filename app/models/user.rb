@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
   has_secure_password
   has_many :posts
   has_many :memberships
+  has_many :interactions, foreign_key: 'origin_user_id'
   has_many :tents, through: :memberships
 
   # Concerns

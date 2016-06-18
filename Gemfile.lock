@@ -47,9 +47,6 @@ GEM
     bcrypt (3.1.11)
     builder (3.2.2)
     byebug (9.0.5)
-    closure_tree (6.0.0)
-      activerecord (>= 4.1.0)
-      with_advisory_lock (>= 3.0.0)
     coderay (1.1.1)
     concurrent-ruby (1.0.2)
     devise (4.1.1)
@@ -193,9 +190,6 @@ GEM
       raindrops (~> 0.7)
     warden (1.2.6)
       rack (>= 1.0)
-    with_advisory_lock (3.0.0)
-      activerecord (>= 3.2)
-      thread_safe
 
 PLATFORMS
   ruby
@@ -203,7 +197,6 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers (~> 0.10.0)
   annotate (~> 2.6.5)
-  closure_tree
   devise (~> 4.1.1)
   factory_girl_rails (~> 4.5.0)
   faker (~> 1.6.3)
