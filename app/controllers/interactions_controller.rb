@@ -1,6 +1,6 @@
 class InteractionsController < ApplicationController
 def index
-    @interactions = Interaction.includes([:post, :tent, :user, :interaction_type]).where(target_user: params[:user_id])
+    @interactions = Interaction.includes([:post, :tent, :user, :interaction_type]).where(target_user: params[:user_id]).order(:created_at).order('posts.created_at DESC')
     render json: @interactions
   end
 
