@@ -71,12 +71,14 @@ class Generator
       image: { uri: "http://thecatapi.com/api/images/get" },
       user: self.user.as_json(except: [:authentication_token, :password_digest, :updated_at, :created_at]),
       text: Faker::Hipster.sentence,
-      created_at: Firebase::ServerValue::TIMESTAMP,
+      created_at: Firebase::ServerValue::TIMESTAMP
     })
   end
 end
 
 # create and populate root
+
+p_tent = generator.make_tent(nil, {name: generator.interest})
 
 user = User.create(email: Faker::Internet.email,
         avatar: "http://placekitten.com/100/9#{Random.rand(10)}",
@@ -84,8 +86,6 @@ user = User.create(email: Faker::Internet.email,
         password: 'password')
 generator = Generator.new({user: user})
 
-p_tent = generator.make_tent(nil, {name: generator.interest})
-user.tents << p_tent
 generator.populate_tent(p_tent)
 
 # create and populate children

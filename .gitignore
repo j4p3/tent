@@ -18,3 +18,7 @@
 # Ignore credential files
 /config/secrets/
 .env
+
+# Ignore debugger files
+.byebug_history
+npm-debug.log

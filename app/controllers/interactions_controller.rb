@@ -5,13 +5,20 @@ def index
   end
 
   def show
-    @interaction = Interaction.find_by_id(params[:id])
+    @interaction = Interaction.find(params[:id])
     render json: @interaction
   end
 
   def create
-    if user = User.find(interaction_params[:user_id])
-      @interaction = user.tents.new(interaction_params)
+    if user = User.find(interaction_params[:origin_user_id])
+      target_user_id = Post.find(interaction_params[:post_id]).user_id
+      
+      # @todo variable interaction_type from client
+      @interaction = user.interactions.find_or_initialize_by(
+        interaction_type_id: 3,
+        post_id: interaction_params[:post_id],
+        target_user_id: target_user_id
+      )
 
       if @interaction.save
         render json: @interaction
@@ -46,5 +53,5 @@ end
 private
 
   def interaction_params
-    params.require(:interaction).permit(:interaction_type_id, :tent_id, :origin_user_id, :target_user_id)
+    params.require(:interaction).permit(:interaction_type_id, :tent_id, :origin_user_id, :target_user_id, :post_id)
   end

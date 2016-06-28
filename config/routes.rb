@@ -7,12 +7,15 @@ TentApi::Application.routes.draw do
   match 'users/:id', to: 'users/users#show', via: [:get], defaults: { format: 'json' }
   match 'users/login', to: 'users/users#login', via: [:post], defaults: { format: 'json' }
 
-  devise_for :users, controllers: { :omniauth_callbacks => 'users/omniauth_callbacks' }
+  # devise_for :users, controllers: { :omniauth_callbacks => 'users/omniauth_callbacks' }
+
   # General requests
+  match 'events', to: 'events#index', via: [:get], defaults: { format: 'json' }
   resources :posts, except: [:new, :edit], defaults: { format: 'json' }
   resources :tags, except: [:new, :edit, :update], defaults: { format: 'json' }
   resources :tents, except: [:new, :edit]
   resources :interactions, except: [:new, :edit]
+  resources :subscriptions, only: [:index, :create, :destroy]
 
   root to: 'application#routing_error'
 

@@ -13,6 +13,7 @@
 #
 
 class Tent < ActiveRecord::Base
+  # Relations
   belongs_to :owner, class_name: 'User'
   has_many :memberships
   has_many :users, through: :memberships

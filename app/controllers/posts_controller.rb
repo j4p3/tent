@@ -1,5 +1,11 @@
 class PostsController < ApplicationController
   def index
+    # Possibilities:
+    # * all posts
+    # * all descendant posts
+    # * 
+
+
     # Return 'active' (non-resolved posts) and their tags to index view
     @posts = Post.includes([:tent, :user]).active.order(created_at: :desc)
     if params[:tent_id] && params[:tent_id] != '1' && tent = Tent.find(params[:tent_id])

@@ -28,12 +28,21 @@ class User < ActiveRecord::Base
   has_many :memberships
   has_many :interactions, foreign_key: 'origin_user_id'
   has_many :tents, through: :memberships
+  has_many :subscriptions
 
   # Concerns
   include TokenAuthenticable
 
+  # Callbacks
+  after_create :create_memberships
+
   # Devise strategies
   devise :registerable, :trackable, :omniauthable, :omniauth_providers => [:facebook]
+
+  def create_memberships
+    # @todo compare user email with sent invites to determine what to join
+    self.tents << Tent.first.and_descendants
+  end
 
    # Override devise's password requirement (since we're using FB auth for now)
   def password_required?
