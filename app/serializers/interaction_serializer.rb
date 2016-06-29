@@ -14,7 +14,7 @@
 
 
 class InteractionSerializer < ActiveModel::Serializer
-  attributes :id, :interaction_type, :created_at
+  attributes :id, :interaction_type, :updated_at
   has_one :post
   has_one :user
   has_one :target_user

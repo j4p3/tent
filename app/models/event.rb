@@ -1,28 +1,65 @@
 class Event
-  # 
-  # An action performed by someone other than the current user.
-  # Should give context on:
-  #   action type e.g. interaction, message, post
-  #   post this action occurred on(?) (could have e.g. private message events)
-  #   user behind the action
-  # 
-
   include ActiveModel::Serialization
-  attr_reader :type, :user, :post
+  attr_reader :id, :updated_at, :type, :post, :user, :type_content
 
-  def initialize(attributes)
-    # User ActiveRecord object
-    @user = attributes[:user]
+  # 
+  # Used for serializing Post, Message, Interaction events uniformly
+  # Looks like:
+  # 
+  # {
+  #   ##### base information
+  #   id: 
+  #   updated_at: 
+  #   type: :string
+  #   post: {
+  #     <post>
+  #   }
+  #   user: {
+  #     <user *responsible* for event - responder, interacter, sender>
+  #   }
+  # 
+  #   ##### type-specific
+  #   interaction_type: :string
+  #   last_message: {
+  #     <message>
+  #   }
+  #   tent: {
+  #     <tent>
+  #   }
+  # }
+  # 
 
-    # Post ActiveRecord object
-    @post = attributes[:post]
+  @@normalize = {
+    Post => Proc.new { |e|
+      {
+        id: e.id,
+        updated_at: e.last_message ? Time.at(e.last_message[:created_at]).to_datetime : e.updated_at,
+        type: e.last_message ? :message : :post,
+        post: e,
+        user: e.last_message ? e.last_message[:user] : e.user,
+        type_content: e.last_message == nil ? nil : {
+          last_message: e.last_message[:text]
+        }
+      }
+    },
+    Interaction => Proc.new { |e|
+      {
+        id: e.id,
+        updated_at: e.updated_at,
+        type: :interaction,
+        post: e.post,
+        user: e.user,
+        type_content: {
+          interaction_type: e.interaction_type.name
+        }
+      }
+    }
+  }
 
-    # Symbol (:interaction, :post, :stream)
-    @type = attributes[:type]
-  end
-
-  def self.new_for(user)
-    Interaction.new_for(user.id)
-    Post.new_for(user.id)
+  def initialize(event={})
+    # Absolutely filthy way to turn variable params into a consistent object
+    @@normalize[event.class].call(event).each do |k, v|
+      instance_variable_set("@#{k}", v)
+    end
   end
 end

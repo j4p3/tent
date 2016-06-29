@@ -41,7 +41,8 @@ class User < ActiveRecord::Base
 
   def create_memberships
     # @todo compare user email with sent invites to determine what to join
-    self.tents << Tent.first.and_descendants
+    home_tent = Tent.first
+    self.tents << home_tent.and_descendants
   end
 
    # Override devise's password requirement (since we're using FB auth for now)
