@@ -13,6 +13,10 @@
 #  tent_id     :integer
 #
 
+require 'action_view'
+require 'action_view/helpers'
+include ActionView::Helpers::DateHelper
+
 class Post < ActiveRecord::Base
   # Relations
   belongs_to :user
@@ -35,6 +39,14 @@ class Post < ActiveRecord::Base
   # Mark datetime of resolution.
   after_update :mark_resolved_at, :if => :resolved_changed?
   after_create :subscribe
+
+  def friendly_created_at
+    time_ago_in_words(self.created_at)
+  end
+
+  def friendly_updated_at
+    time_ago_in_words(self.updated_at)
+  end
 
   def request_last_message
     fb_repo = TentApi::Application.config.clients.firebase_repo

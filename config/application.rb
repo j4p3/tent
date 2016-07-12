@@ -35,10 +35,17 @@ module TentApi
     }
 
     firebase_config = {
-        repo: config_secrets["firebase"]["#{Rails.env}"]["repo"],
-        root: config_secrets["firebase"]["#{Rails.env}"]["root"]
+      repo: config_secrets["firebase"]["#{Rails.env}"]["repo"],
+      root: config_secrets["firebase"]["#{Rails.env}"]["root"]
     }
 
+    Aws.config.update({
+      region: 'us-east-1',
+      credentials: Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY']),
+    })
+    S3_BUCKET = Aws::S3::Resource.new.bucket(ENV['S3_BUCKET'])
+
+    config.clients.s3 = S3_BUCKET
     config.clients.facebook_id = facebook_config[:client_id]
     config.clients.facebook_secret = facebook_config[:client_secret]
     config.clients.firebase_repo = firebase_config[:repo]

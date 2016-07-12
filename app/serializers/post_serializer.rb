@@ -14,7 +14,7 @@
 #
 
 class PostSerializer < ActiveModel::Serializer
-  attributes :id, :headline, :content, :created_at
+  attributes :id, :headline, :content, :friendly_created_at, :tent_id
   has_one :tent
   has_one :user
 rescue Exception => e

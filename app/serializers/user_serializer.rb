@@ -22,7 +22,8 @@
 #
 
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :name, :email, :avatar
+  attributes :id, :name, :email, :avatar, :avatar_storage
+  has_one :root_tents_and_descendants
 rescue Exception => e
   raise e if Rails.env.development?
 end

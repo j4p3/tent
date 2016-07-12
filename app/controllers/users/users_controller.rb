@@ -1,19 +1,18 @@
 class Users::UsersController < ApplicationController
-    def index
-      # Return all users
-      if user_params[:ids]
-        @users = User.find(user_params[:ids]).eager_load(:posts)
-      elsif user_params
-        @users = User.where(user_params.except(:format, :action, :controller))
-        status = :not_found if @users.empty?
-      else
-        @users = User.all
-      end
-      render json: @users, status: status
+  before_action :avatar_storage, only: [:create]
+
+  def index
+    # Return all users
+    if params[:ids]
+      @users = User.find(params[:ids]).eager_load(:posts)
+    else
+      @users = User.all
     end
+    render json: @users, status: status
+  end
 
   def show
-    @user = User.find(user_params[:id])
+    @user = User.find(params[:id])
     render json: @user
   end
 
@@ -27,7 +26,21 @@ class Users::UsersController < ApplicationController
     end
   end
 
-  def login
+  def update
+    print params
+    print user_params
+    if @user = User.find(user_params[:id])
+      if @user.update(user_params)
+        render json: @user
+      else
+        render json: @user.errors, status: :unprocessable_entity
+      end
+    else
+      head :not_found
+    end
+  end
+
+  def authenticate
     if @user = User.find_by(email: user_params[:email])
       if @user.authenticate(user_params[:password])
         render json: @user
@@ -44,4 +57,15 @@ private
 
   def user_params
     params.require(:user).permit(:id, :name, :email, :password, :avatar)
+  end
+
+  def avatar_storage
+    s3_direct_post = S3_BUCKET.presigned_post(
+      key: "avatars/#{SecureRandom.uuid}/${filename}",
+      success_action_status: '201',
+      acl: 'public-read')
+    {
+      fields: s3_direct_post.fields,
+      url: s3_direct_post.url
+    }
   end

@@ -76,15 +76,14 @@ class Generator
   end
 end
 
-# create and populate root
-
-p_tent = generator.make_tent(nil, {name: generator.interest})
-
 user = User.create(email: Faker::Internet.email,
         avatar: "http://placekitten.com/100/9#{Random.rand(10)}",
         name: Faker::StarWars.character,
         password: 'password')
 generator = Generator.new({user: user})
+
+# create and populate root
+p_tent = generator.make_tent(nil, {name: generator.interest})
 
 generator.populate_tent(p_tent)
 

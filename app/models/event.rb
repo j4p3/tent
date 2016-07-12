@@ -37,9 +37,9 @@ class Event
         type: e.last_message ? :message : :post,
         post: e,
         user: e.last_message ? e.last_message[:user] : e.user,
-        type_content: e.last_message == nil ? nil : {
-          last_message: e.last_message[:text]
-        }
+        type_content: e.last_message == nil ?
+        { tent_id: e.tent_id } :
+        { last_message: e.last_message[:text] }
       }
     },
     Interaction => Proc.new { |e|

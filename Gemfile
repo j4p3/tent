@@ -22,6 +22,9 @@ gem 'faker', '~> 1.6.3'
 # Firebase wrapper
 gem 'firebase', '~> 0.2.6'
 
+# AWS SDK
+gem 'aws-sdk', '~> 2.3.21'
+
 # Async
 # gem "redis", "~> 3.0.6"
 # gem "sidekiq", "~> 2.17.2"

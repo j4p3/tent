@@ -35,14 +35,29 @@ class User < ActiveRecord::Base
 
   # Callbacks
   after_create :create_memberships
+  after_create :create_default_image
 
   # Devise strategies
   devise :registerable, :trackable, :omniauthable, :omniauth_providers => [:facebook]
 
+  def root_tents
+    self.tents.where(parent: nil)
+  end
+
+  def root_tents_and_descendants
+    self.root_tents.map { |t| t.and_descendants_tree }
+  end
+
   def create_memberships
     # @todo compare user email with sent invites to determine what to join
-    home_tent = Tent.first
-    self.tents << home_tent.and_descendants
+    # @todo don't join all subtents, defeats the whole purpose
+    if home_tent = Tent.first
+      self.tents << home_tent.and_descendants
+    end
+  end
+
+  def create_default_image
+    # @todo generate a default image for users who don't set one
   end
 
    # Override devise's password requirement (since we're using FB auth for now)

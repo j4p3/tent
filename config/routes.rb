@@ -2,10 +2,10 @@ TentApi::Application.routes.draw do
   # Handle OPTIONS requests
   match '*all', to: 'application#cors', via: [:options]
 
-  match 'users', to: 'users/users#index', via: [:get], defaults: { format: 'json' }
-  match 'users', to: 'users/users#create', via: [:post], defaults: { format: 'json' }
-  match 'users/:id', to: 'users/users#show', via: [:get], defaults: { format: 'json' }
-  match 'users/login', to: 'users/users#login', via: [:post], defaults: { format: 'json' }
+  # match 'users', to: 'users/users#index', via: [:get], defaults: { format: 'json' }
+  # match 'users', to: 'users/users#create', via: [:post], defaults: { format: 'json' }
+  # match 'users/:id', to: 'users/users#show', via: [:get], defaults: { format: 'json' }
+  
 
   # devise_for :users, controllers: { :omniauth_callbacks => 'users/omniauth_callbacks' }
 
@@ -16,6 +16,8 @@ TentApi::Application.routes.draw do
   resources :tents, except: [:new, :edit]
   resources :interactions, except: [:new, :edit]
   resources :subscriptions, only: [:index, :create, :destroy]
+  resources :users, except: [:new], controller: 'users/users', defaults: { format: 'json' }
+  match 'users/login', to: 'users/users#authenticate', via: [:post], defaults: { format: 'json' }
 
   root to: 'application#routing_error'
 
