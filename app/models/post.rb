@@ -56,14 +56,16 @@ class Post < ActiveRecord::Base
     # &nil negates the '.json' this client appends to all requests :/
     r = firebase.get('stream.json?orderBy="created_at"&limitToLast=1&nil')
     if r.body
-      b = r.body.flatten
-      @last_message = {
-        created_at: b[1]['created_at'],
-        text: b[1]['text'],
-        user: b[1]['user'].symbolize_keys,
-        device: b[1]['device'],
-        image: b[1]['image']['uri']
-      }
+      if b = r.body.flatten
+        image = b[1]['image'] ? b[1]['image'] : nil
+        @last_message = {
+          created_at: b[1]['created_at'],
+          text: b[1]['text'],
+          user: b[1]['user'].symbolize_keys,
+          device: b[1]['device'],
+          image: image
+        }
+      end
     end
     self
   end

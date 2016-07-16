@@ -26,9 +26,10 @@ class User < ActiveRecord::Base
   has_secure_password
   has_many :posts
   has_many :memberships
+  has_many :subscriptions
   has_many :interactions, foreign_key: 'origin_user_id'
   has_many :tents, through: :memberships
-  has_many :subscriptions
+  has_many :subscribed_posts, through: :subscriptions, source: :post
 
   # Concerns
   include TokenAuthenticable
@@ -40,6 +41,21 @@ class User < ActiveRecord::Base
   # Devise strategies
   devise :registerable, :trackable, :omniauthable, :omniauth_providers => [:facebook]
 
+  def subscription_ids
+    self.subscribed_posts.pluck(:id)
+  end
+
+  def avatar_storage
+    s3_direct_post = S3_BUCKET.presigned_post(
+      key: "avatars/#{SecureRandom.uuid}/${filename}",
+      success_action_status: '201',
+      acl: 'public-read')
+    {
+      fields: s3_direct_post.fields,
+      url: s3_direct_post.url
+    }
+  end
+
   def root_tents
     self.tents.where(parent: nil)
   end
@@ -50,9 +66,8 @@ class User < ActiveRecord::Base
 
   def create_memberships
     # @todo compare user email with sent invites to determine what to join
-    # @todo don't join all subtents, defeats the whole purpose
-    if home_tent = Tent.first
-      self.tents << home_tent.and_descendants
+    if home_tent = Tent.last
+      self.tents << home_tent.and_parents
     end
   end
 

@@ -30,6 +30,19 @@ class Tent < ActiveRecord::Base
     and_descendants.map(&:posts).flatten
   end
 
+  def and_parents
+    [self] + parents
+  end
+
+  def parents (a=[])
+    if self.parent
+      a += [self.parent]
+      a += [self.parent.parents(a)]
+    else
+      a
+    end
+  end
+
   def and_descendants
     [self] + descendants
   end

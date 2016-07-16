@@ -1,6 +1,4 @@
 class Users::UsersController < ApplicationController
-  before_action :avatar_storage, only: [:create]
-
   def index
     # Return all users
     if params[:ids]
@@ -57,15 +55,4 @@ private
 
   def user_params
     params.require(:user).permit(:id, :name, :email, :password, :avatar)
-  end
-
-  def avatar_storage
-    s3_direct_post = S3_BUCKET.presigned_post(
-      key: "avatars/#{SecureRandom.uuid}/${filename}",
-      success_action_status: '201',
-      acl: 'public-read')
-    {
-      fields: s3_direct_post.fields,
-      url: s3_direct_post.url
-    }
   end

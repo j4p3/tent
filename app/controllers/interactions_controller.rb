@@ -14,6 +14,7 @@ def index
       target_user_id = Post.find(interaction_params[:post_id]).user_id
       
       # @todo variable interaction_type from client
+      # @todo figure out why interactions are duplicating
       @interaction = user.interactions.find_or_initialize_by(
         interaction_type_id: 3,
         post_id: interaction_params[:post_id],
