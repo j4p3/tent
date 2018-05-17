@@ -58,7 +58,7 @@ class Generator
   def make_post(tent, options={})
     Post.create(
       user: self.user,
-      headline: "#{Faker::Company.catch_phrase} in #{Faker::StarWars.planet}",
+      headline: "#{Faker::Company.catch_phrase} #{['in', 'with', 'from'][rand(3)]} #{Faker::StarWars.planet}",
       content: Faker::Hipster.sentence,
       resolved: false,
       tent_id: tent.id

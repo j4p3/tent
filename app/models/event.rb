@@ -58,6 +58,7 @@ class Event
 
   def initialize(event={})
     # Absolutely filthy way to turn variable params into a consistent object
+    # @todo conditionally handle object attrs e.g. user's avatar_storage
     @@normalize[event.class].call(event).each do |k, v|
       instance_variable_set("@#{k}", v)
     end

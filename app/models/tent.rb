@@ -68,6 +68,23 @@ class Tent < ActiveRecord::Base
     end
   end
 
+  def descendants_tree_for(user)
+    children.map do |child|
+      if (user.memberships.includes(child))
+        foos = child.descendants_tree
+        hash = child.serializable_hash
+        hash[:children] = foos
+        hash
+      end
+    end
+  end
+
+  def and_descendants_tree_for(user)
+    hash = self.serializable_hash
+    hash[:children] = self.descendants_tree
+    hash
+  end
+
   private
 
   def self.tree_for(i)

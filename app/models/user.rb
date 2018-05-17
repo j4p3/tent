@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
   end
 
   def root_tents_and_descendants
-    self.root_tents.map { |t| t.and_descendants_tree }
+    self.root_tents.map { |t| t.and_descendants_tree_for(self) }
   end
 
   def create_memberships
